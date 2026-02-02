@@ -111,10 +111,16 @@ def view_student_by_course(db):
 
 # Have a go at writing this function!
 def review_student_numbers(db):
+    query = '''
+            SELECT COUNT(DISTINCT s.name)
+            FROM Students s
+            JOIN StudentCourses sc ON s.id = sc.student_id
+            JOIN Courses c ON sc.course_id = c.id
+            GROUP BY c.name
     '''
-    Print the number of students registered for each course.    
-    :param db: Database object to query
-    '''
+    cursor = db.execute(query)
+    for student in cursor:
+        print(f"Name: {student[0]}")
     pass
 
 def main():
